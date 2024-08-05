@@ -1,0 +1,3 @@
+module github.com/D1Y0RBEKORIFJONOV/Olimpiada_medallar_reytingi_va_live_streaming_tizimi_protos
+
+go 1.22.5
