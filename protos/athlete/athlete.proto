@@ -1,5 +1,39 @@
 syntax = "proto3";
 
+option go_package = "abduazim.athlete.v1;athlete";
 
-service AthleteService {
+service AthleteService{
+    rpc CreateAthlete(AthleteRequest) returns(AthleteResponse);
+    rpc GetbyIdAthlete(AthleteResponse) returns(Athlete);
+    rpc GetAthlete(Empty) returns(ListAthlete);
+    rpc UpdateAthlete(Athlete) returns(Response);
+    rpc DeleteAthlete(AthleteResponse) returns(Response);
+}
+
+message Athlete{
+    string id = 1;
+    string name = 2;
+    string countryId = 3;
+    string sportType = 4;
+}
+
+message AthleteRequest{
+    string name = 1;
+    string countryID = 2;
+    string sportType = 3;
+}
+
+message AthleteResponse{
+    string id = 1;
+}
+
+message Empty{}
+
+message ListAthlete{
+    repeated Athlete athlete = 1;
+}
+
+
+message Response{
+    string message = 1;
 }
