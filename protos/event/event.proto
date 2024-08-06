@@ -18,6 +18,7 @@ message Match {
   string match_news = 5;
   string winner_id = 6;
   Opponents opponents = 7;
+  bool is_finished = 8;
 }
 
 
@@ -51,8 +52,44 @@ message CreatEventReq {
 message EventStatus  {
   string message = 1;
 }
+message GetEventReq {
+  string event_id = 1;
+}
+
+message GetEventsTourReq {
+  string  event_id = 1;
+  string  tour_id = 2;
+}
+message GetEventsToursMatchReq {
+  string  event_id = 1;
+  string  tour_id = 2;
+  string match_id = 3;
+}
+message AddAthleteToEventReq {
+  string event_id = 1;
+  string athlete_id = 2;
+}
+
+message StartEventReq {
+  string event_id = 1;
+}
+
+message UpdateMatchReq {
+  string  match_id = 1;
+  bool  is_started = 4;
+  string match_news = 5;
+  string winner_id = 6;
+  string event_id = 7;
+  string tour_id = 8;
+  bool is_finished = 9;
+}
 
 service EventService  {
   rpc CreateEvent(CreatEventReq) returns (EventStatus);
-
+  rpc GetEvent(GetEventReq) returns (Event);
+  rpc GetEventsTour(GetEventsTourReq) returns (Tour);
+  rpc GetEventsToursMatch(GetEventsToursMatchReq) returns (Match);
+  rpc AddAthleteToEvent(AddAthleteToEventReq) returns (EventStatus);
+  rpc StartEvent(StartEventReq) returns (EventStatus);
+  rpc UpdateMatch(UpdateMatchReq) returns (EventStatus);
 }
