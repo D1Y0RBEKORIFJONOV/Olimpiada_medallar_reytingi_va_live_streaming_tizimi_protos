@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option go_package = "diyorbek.medals.v1;athlete1";
+
+
+service AthleteService {
+  rpc CreateAthlete(CreateAthleteReq) returns (CreateAthleteRes);
+  rpc UpdateAthlete(UpdateAthleteReq) returns
+}

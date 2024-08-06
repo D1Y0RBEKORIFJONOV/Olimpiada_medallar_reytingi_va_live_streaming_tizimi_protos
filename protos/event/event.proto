@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option go_package = "diyorbek.event.v1;event1";
+
+
+
+message Opponents {
+  string opponent1_id = 1;
+  string opponent2_id = 2;
+}
+
+
+message Match {
+  string  match_id = 1;
+  string started_at = 2;
+  string end_at = 3;
+  bool  is_started = 4;
+  string match_news = 5;
+  string winner_id = 6;
+  Opponents opponents = 7;
+}
+
+
+
+message Tour{
+  string tour_id = 1;
+  repeated Match matches = 2;
+  string tour_name = 3;
+  repeated string winners_id = 4;
+  bool is_started = 5;
+}
+
+message Event {
+  string event_id = 1;
+  string event_name = 2;
+  string sport_type = 3;
+  string current_tour_id = 4;
+  string winner_id = 5;
+  bool is_started = 6;
+}
+
+
+message CreatEventReq {
+  int32  count_tour = 1;
+  repeated string athlete_id = 2;
+  string duration_match = 3;
+  string event_name = 4;
+  string sport_type = 5;
+}
+
+message EventStatus  {
+  string message = 1;
+}
+
+service EventService  {
+  rpc CreateEvent(CreatEventReq) returns (EventStatus);
+
+}
