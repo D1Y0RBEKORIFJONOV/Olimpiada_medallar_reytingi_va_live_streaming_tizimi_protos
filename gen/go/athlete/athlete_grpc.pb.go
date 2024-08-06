@@ -4,7 +4,7 @@
 // - protoc             v5.27.1
 // source: athlete/athlete.proto
 
-package atlete
+package athlete
 
 import (
 	context "context"

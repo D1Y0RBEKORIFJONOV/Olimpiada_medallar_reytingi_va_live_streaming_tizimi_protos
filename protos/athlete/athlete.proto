@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "abduazim.athlete.v1;atlete";
+option go_package = "abduazim.athlete.v1;athlete";
 
 service AthleteService{
     rpc CreateAthlete(AthleteRequest) returns(AthleteResponse);
@@ -15,14 +15,12 @@ message Athlete{
     string name = 2;
     string countryId = 3;
     string sportType = 4;
-    string status = 5;
 }
 
 message AthleteRequest{
     string name = 1;
     string countryID = 2;
     string sportType = 3;
-    string status = 4;
 }
 
 message AthleteResponse{
