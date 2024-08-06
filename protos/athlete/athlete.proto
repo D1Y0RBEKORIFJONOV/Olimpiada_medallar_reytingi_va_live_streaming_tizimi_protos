@@ -15,12 +15,14 @@ message Athlete{
     string name = 2;
     string countryId = 3;
     string sportType = 4;
+    string status = 5;
 }
 
 message AthleteRequest{
     string name = 1;
     string countryID = 2;
     string sportType = 3;
+    string status = 4;
 }
 
 message AthleteResponse{
