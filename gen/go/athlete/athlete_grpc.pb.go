@@ -24,6 +24,8 @@ const (
 	AthleteService_GetAthlete_FullMethodName     = "/AthleteService/GetAthlete"
 	AthleteService_UpdateAthlete_FullMethodName  = "/AthleteService/UpdateAthlete"
 	AthleteService_DeleteAthlete_FullMethodName  = "/AthleteService/DeleteAthlete"
+	AthleteService_CreateCountry_FullMethodName  = "/AthleteService/CreateCountry"
+	AthleteService_GetbyIdCountry_FullMethodName = "/AthleteService/GetbyIdCountry"
 )
 
 // AthleteServiceClient is the client API for AthleteService service.
@@ -35,6 +37,8 @@ type AthleteServiceClient interface {
 	GetAthlete(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListAthlete, error)
 	UpdateAthlete(ctx context.Context, in *Athlete, opts ...grpc.CallOption) (*Response, error)
 	DeleteAthlete(ctx context.Context, in *AthleteResponse, opts ...grpc.CallOption) (*Response, error)
+	CreateCountry(ctx context.Context, in *CountryRequest, opts ...grpc.CallOption) (*CountryResponse, error)
+	GetbyIdCountry(ctx context.Context, in *CountryResponse, opts ...grpc.CallOption) (*Country, error)
 }
 
 type athleteServiceClient struct {
@@ -95,6 +99,26 @@ func (c *athleteServiceClient) DeleteAthlete(ctx context.Context, in *AthleteRes
 	return out, nil
 }
 
+func (c *athleteServiceClient) CreateCountry(ctx context.Context, in *CountryRequest, opts ...grpc.CallOption) (*CountryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CountryResponse)
+	err := c.cc.Invoke(ctx, AthleteService_CreateCountry_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *athleteServiceClient) GetbyIdCountry(ctx context.Context, in *CountryResponse, opts ...grpc.CallOption) (*Country, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Country)
+	err := c.cc.Invoke(ctx, AthleteService_GetbyIdCountry_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AthleteServiceServer is the server API for AthleteService service.
 // All implementations must embed UnimplementedAthleteServiceServer
 // for forward compatibility
@@ -104,6 +128,8 @@ type AthleteServiceServer interface {
 	GetAthlete(context.Context, *Empty) (*ListAthlete, error)
 	UpdateAthlete(context.Context, *Athlete) (*Response, error)
 	DeleteAthlete(context.Context, *AthleteResponse) (*Response, error)
+	CreateCountry(context.Context, *CountryRequest) (*CountryResponse, error)
+	GetbyIdCountry(context.Context, *CountryResponse) (*Country, error)
 	mustEmbedUnimplementedAthleteServiceServer()
 }
 
@@ -125,6 +151,12 @@ func (UnimplementedAthleteServiceServer) UpdateAthlete(context.Context, *Athlete
 }
 func (UnimplementedAthleteServiceServer) DeleteAthlete(context.Context, *AthleteResponse) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAthlete not implemented")
+}
+func (UnimplementedAthleteServiceServer) CreateCountry(context.Context, *CountryRequest) (*CountryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCountry not implemented")
+}
+func (UnimplementedAthleteServiceServer) GetbyIdCountry(context.Context, *CountryResponse) (*Country, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetbyIdCountry not implemented")
 }
 func (UnimplementedAthleteServiceServer) mustEmbedUnimplementedAthleteServiceServer() {}
 
@@ -229,6 +261,42 @@ func _AthleteService_DeleteAthlete_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AthleteService_CreateCountry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CountryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AthleteServiceServer).CreateCountry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AthleteService_CreateCountry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AthleteServiceServer).CreateCountry(ctx, req.(*CountryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AthleteService_GetbyIdCountry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CountryResponse)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AthleteServiceServer).GetbyIdCountry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AthleteService_GetbyIdCountry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AthleteServiceServer).GetbyIdCountry(ctx, req.(*CountryResponse))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AthleteService_ServiceDesc is the grpc.ServiceDesc for AthleteService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -255,6 +323,14 @@ var AthleteService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAthlete",
 			Handler:    _AthleteService_DeleteAthlete_Handler,
+		},
+		{
+			MethodName: "CreateCountry",
+			Handler:    _AthleteService_CreateCountry_Handler,
+		},
+		{
+			MethodName: "GetbyIdCountry",
+			Handler:    _AthleteService_GetbyIdCountry_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -8,6 +8,9 @@ service AthleteService{
     rpc GetAthlete(Empty) returns(ListAthlete);
     rpc UpdateAthlete(Athlete) returns(Response);
     rpc DeleteAthlete(AthleteResponse) returns(Response);
+
+    rpc CreateCountry(CountryRequest) returns(CountryResponse);
+    rpc GetbyIdCountry(CountryResponse) returns(Country);
 }
 
 message Athlete{
@@ -15,6 +18,19 @@ message Athlete{
     string name = 2;
     string countryId = 3;
     string sportType = 4;
+}
+
+message Country{
+    string id = 1;
+    string name = 2;
+}
+
+message CountryRequest{
+    string name = 1;
+}
+
+message CountryResponse{
+    string id = 1;
 }
 
 message AthleteRequest{
