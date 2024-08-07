@@ -32,7 +32,6 @@ message ListUser {
 message Request {
     string user_id = 1;
     string user_name = 2;
-    Profile profile = 3;
 }
 
 message User {
@@ -40,7 +39,6 @@ message User {
     string user_name = 2;
     string email = 3;
     string password = 4;
-    Profile profile = 5;
 }
 
 message GetUserRequest {
@@ -64,7 +62,6 @@ message UserRequest {
     string email = 2;
     string password = 3;
     string confirm_password = 4;
-    Profile profile = 5;
 }
 
 message DeleteUserRequest {
@@ -80,11 +77,6 @@ message UpdateResponse {
     string message = 1;
 }
 
-message Profile {
-    string name = 1;
-    string address = 2;
-}
-
 message LoginRequest {
     string email = 1;
     string password = 2;
@@ -94,5 +86,4 @@ message UserDetailResponse {
     string id = 1;
     string user_name = 2;
     string email = 3;
-    Profile profile = 4;
 }
