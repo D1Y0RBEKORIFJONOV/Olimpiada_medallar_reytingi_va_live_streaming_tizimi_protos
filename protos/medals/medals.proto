@@ -5,6 +5,7 @@ option go_package  = "doston.medals.v1;medals";
 
 service MedalsService {
     rpc GetCountryRanking(MedalRankRequest) returns (MedalRankResponse);
+    rpc Getathlete(AthleteGetRequest) returns (AthleteGetRespone);
     rpc MedalCreate(MedalCreateRequest) returns (GeneralResponseMedals);
     rpc MedalUpdate(MedalUpdateRequest) returns (GeneralResponseMedals);
     rpc MedalDelete(MedalDeleteRequest) returns (GeneralResponseMedals);
@@ -42,7 +43,14 @@ message MedalUpdateRequest{
 message MedalDeleteRequest{
     string medalid=1;
 }
-message GeneralResponseMedals{
+ message GeneralResponseMedals{
     string status=1;
 }
 
+message AthleteGetRequest{
+    string athleteid=1;
+}
+
+message AthleteGetRespone{
+    repeated MedalCreateRequest medals=1;
+}

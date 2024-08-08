@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	MedalsService_GetCountryRanking_FullMethodName = "/MedalsService/GetCountryRanking"
+	MedalsService_Getathlete_FullMethodName        = "/MedalsService/Getathlete"
 	MedalsService_MedalCreate_FullMethodName       = "/MedalsService/MedalCreate"
 	MedalsService_MedalUpdate_FullMethodName       = "/MedalsService/MedalUpdate"
 	MedalsService_MedalDelete_FullMethodName       = "/MedalsService/MedalDelete"
@@ -30,6 +31,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MedalsServiceClient interface {
 	GetCountryRanking(ctx context.Context, in *MedalRankRequest, opts ...grpc.CallOption) (*MedalRankResponse, error)
+	Getathlete(ctx context.Context, in *AthleteGetRequest, opts ...grpc.CallOption) (*AthleteGetRespone, error)
 	MedalCreate(ctx context.Context, in *MedalCreateRequest, opts ...grpc.CallOption) (*GeneralResponseMedals, error)
 	MedalUpdate(ctx context.Context, in *MedalUpdateRequest, opts ...grpc.CallOption) (*GeneralResponseMedals, error)
 	MedalDelete(ctx context.Context, in *MedalDeleteRequest, opts ...grpc.CallOption) (*GeneralResponseMedals, error)
@@ -47,6 +49,16 @@ func (c *medalsServiceClient) GetCountryRanking(ctx context.Context, in *MedalRa
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(MedalRankResponse)
 	err := c.cc.Invoke(ctx, MedalsService_GetCountryRanking_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *medalsServiceClient) Getathlete(ctx context.Context, in *AthleteGetRequest, opts ...grpc.CallOption) (*AthleteGetRespone, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AthleteGetRespone)
+	err := c.cc.Invoke(ctx, MedalsService_Getathlete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -88,6 +100,7 @@ func (c *medalsServiceClient) MedalDelete(ctx context.Context, in *MedalDeleteRe
 // for forward compatibility
 type MedalsServiceServer interface {
 	GetCountryRanking(context.Context, *MedalRankRequest) (*MedalRankResponse, error)
+	Getathlete(context.Context, *AthleteGetRequest) (*AthleteGetRespone, error)
 	MedalCreate(context.Context, *MedalCreateRequest) (*GeneralResponseMedals, error)
 	MedalUpdate(context.Context, *MedalUpdateRequest) (*GeneralResponseMedals, error)
 	MedalDelete(context.Context, *MedalDeleteRequest) (*GeneralResponseMedals, error)
@@ -100,6 +113,9 @@ type UnimplementedMedalsServiceServer struct {
 
 func (UnimplementedMedalsServiceServer) GetCountryRanking(context.Context, *MedalRankRequest) (*MedalRankResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCountryRanking not implemented")
+}
+func (UnimplementedMedalsServiceServer) Getathlete(context.Context, *AthleteGetRequest) (*AthleteGetRespone, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Getathlete not implemented")
 }
 func (UnimplementedMedalsServiceServer) MedalCreate(context.Context, *MedalCreateRequest) (*GeneralResponseMedals, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MedalCreate not implemented")
@@ -137,6 +153,24 @@ func _MedalsService_GetCountryRanking_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MedalsServiceServer).GetCountryRanking(ctx, req.(*MedalRankRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MedalsService_Getathlete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AthleteGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MedalsServiceServer).Getathlete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MedalsService_Getathlete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MedalsServiceServer).Getathlete(ctx, req.(*AthleteGetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -205,6 +239,10 @@ var MedalsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCountryRanking",
 			Handler:    _MedalsService_GetCountryRanking_Handler,
+		},
+		{
+			MethodName: "Getathlete",
+			Handler:    _MedalsService_Getathlete_Handler,
 		},
 		{
 			MethodName: "MedalCreate",
