@@ -4,7 +4,7 @@
 // - protoc             v5.27.1
 // source: user/user.proto
 
-package user
+package usser
 
 import (
 	context "context"
