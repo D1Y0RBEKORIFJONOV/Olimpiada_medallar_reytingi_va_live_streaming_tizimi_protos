@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 
-option go_package  = "doston.medals.v1;medalss";
+option go_package  = "doston.medals.v1;medals";
 
 service MedalsService {
     rpc GetCountryRanking(MedalRankRequest) returns (MedalRankResponse);
