@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "abduazim.user.v1;user";
+option go_package = "abduazim.user.v1;usser";
 
 service UserService {
     rpc CreateUser(UserRequest) returns(UserResponse);
