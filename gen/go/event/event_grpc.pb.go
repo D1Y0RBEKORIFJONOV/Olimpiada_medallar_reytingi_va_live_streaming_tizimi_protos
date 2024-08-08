@@ -23,9 +23,9 @@ const (
 	EventService_GetEvent_FullMethodName            = "/EventService/GetEvent"
 	EventService_GetEventsTour_FullMethodName       = "/EventService/GetEventsTour"
 	EventService_GetEventsToursMatch_FullMethodName = "/EventService/GetEventsToursMatch"
-	EventService_AddAthleteToEvent_FullMethodName   = "/EventService/AddAthleteToEvent"
-	EventService_StartEvent_FullMethodName          = "/EventService/StartEvent"
 	EventService_UpdateMatch_FullMethodName         = "/EventService/UpdateMatch"
+	EventService_GetAllEvent_FullMethodName         = "/EventService/GetAllEvent"
+	EventService_GetAllTour_FullMethodName          = "/EventService/GetAllTour"
 )
 
 // EventServiceClient is the client API for EventService service.
@@ -36,9 +36,9 @@ type EventServiceClient interface {
 	GetEvent(ctx context.Context, in *GetEventReq, opts ...grpc.CallOption) (*Event, error)
 	GetEventsTour(ctx context.Context, in *GetEventsTourReq, opts ...grpc.CallOption) (*Tour, error)
 	GetEventsToursMatch(ctx context.Context, in *GetEventsToursMatchReq, opts ...grpc.CallOption) (*Match, error)
-	AddAthleteToEvent(ctx context.Context, in *AddAthleteToEventReq, opts ...grpc.CallOption) (*EventStatus, error)
-	StartEvent(ctx context.Context, in *StartEventReq, opts ...grpc.CallOption) (*EventStatus, error)
 	UpdateMatch(ctx context.Context, in *UpdateMatchReq, opts ...grpc.CallOption) (*EventStatus, error)
+	GetAllEvent(ctx context.Context, in *GetAllEventReq, opts ...grpc.CallOption) (*GetAllEventRes, error)
+	GetAllTour(ctx context.Context, in *GetAllTourReq, opts ...grpc.CallOption) (*GetAllTourRes, error)
 }
 
 type eventServiceClient struct {
@@ -89,30 +89,30 @@ func (c *eventServiceClient) GetEventsToursMatch(ctx context.Context, in *GetEve
 	return out, nil
 }
 
-func (c *eventServiceClient) AddAthleteToEvent(ctx context.Context, in *AddAthleteToEventReq, opts ...grpc.CallOption) (*EventStatus, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(EventStatus)
-	err := c.cc.Invoke(ctx, EventService_AddAthleteToEvent_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *eventServiceClient) StartEvent(ctx context.Context, in *StartEventReq, opts ...grpc.CallOption) (*EventStatus, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(EventStatus)
-	err := c.cc.Invoke(ctx, EventService_StartEvent_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *eventServiceClient) UpdateMatch(ctx context.Context, in *UpdateMatchReq, opts ...grpc.CallOption) (*EventStatus, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(EventStatus)
 	err := c.cc.Invoke(ctx, EventService_UpdateMatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *eventServiceClient) GetAllEvent(ctx context.Context, in *GetAllEventReq, opts ...grpc.CallOption) (*GetAllEventRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAllEventRes)
+	err := c.cc.Invoke(ctx, EventService_GetAllEvent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *eventServiceClient) GetAllTour(ctx context.Context, in *GetAllTourReq, opts ...grpc.CallOption) (*GetAllTourRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAllTourRes)
+	err := c.cc.Invoke(ctx, EventService_GetAllTour_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -127,9 +127,9 @@ type EventServiceServer interface {
 	GetEvent(context.Context, *GetEventReq) (*Event, error)
 	GetEventsTour(context.Context, *GetEventsTourReq) (*Tour, error)
 	GetEventsToursMatch(context.Context, *GetEventsToursMatchReq) (*Match, error)
-	AddAthleteToEvent(context.Context, *AddAthleteToEventReq) (*EventStatus, error)
-	StartEvent(context.Context, *StartEventReq) (*EventStatus, error)
 	UpdateMatch(context.Context, *UpdateMatchReq) (*EventStatus, error)
+	GetAllEvent(context.Context, *GetAllEventReq) (*GetAllEventRes, error)
+	GetAllTour(context.Context, *GetAllTourReq) (*GetAllTourRes, error)
 	mustEmbedUnimplementedEventServiceServer()
 }
 
@@ -149,14 +149,14 @@ func (UnimplementedEventServiceServer) GetEventsTour(context.Context, *GetEvents
 func (UnimplementedEventServiceServer) GetEventsToursMatch(context.Context, *GetEventsToursMatchReq) (*Match, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEventsToursMatch not implemented")
 }
-func (UnimplementedEventServiceServer) AddAthleteToEvent(context.Context, *AddAthleteToEventReq) (*EventStatus, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddAthleteToEvent not implemented")
-}
-func (UnimplementedEventServiceServer) StartEvent(context.Context, *StartEventReq) (*EventStatus, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StartEvent not implemented")
-}
 func (UnimplementedEventServiceServer) UpdateMatch(context.Context, *UpdateMatchReq) (*EventStatus, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMatch not implemented")
+}
+func (UnimplementedEventServiceServer) GetAllEvent(context.Context, *GetAllEventReq) (*GetAllEventRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllEvent not implemented")
+}
+func (UnimplementedEventServiceServer) GetAllTour(context.Context, *GetAllTourReq) (*GetAllTourRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllTour not implemented")
 }
 func (UnimplementedEventServiceServer) mustEmbedUnimplementedEventServiceServer() {}
 
@@ -243,42 +243,6 @@ func _EventService_GetEventsToursMatch_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EventService_AddAthleteToEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddAthleteToEventReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EventServiceServer).AddAthleteToEvent(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: EventService_AddAthleteToEvent_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventServiceServer).AddAthleteToEvent(ctx, req.(*AddAthleteToEventReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _EventService_StartEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StartEventReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EventServiceServer).StartEvent(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: EventService_StartEvent_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EventServiceServer).StartEvent(ctx, req.(*StartEventReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _EventService_UpdateMatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateMatchReq)
 	if err := dec(in); err != nil {
@@ -293,6 +257,42 @@ func _EventService_UpdateMatch_Handler(srv interface{}, ctx context.Context, dec
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EventServiceServer).UpdateMatch(ctx, req.(*UpdateMatchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _EventService_GetAllEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllEventReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EventServiceServer).GetAllEvent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EventService_GetAllEvent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EventServiceServer).GetAllEvent(ctx, req.(*GetAllEventReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _EventService_GetAllTour_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllTourReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EventServiceServer).GetAllTour(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EventService_GetAllTour_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EventServiceServer).GetAllTour(ctx, req.(*GetAllTourReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -321,16 +321,16 @@ var EventService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _EventService_GetEventsToursMatch_Handler,
 		},
 		{
-			MethodName: "AddAthleteToEvent",
-			Handler:    _EventService_AddAthleteToEvent_Handler,
-		},
-		{
-			MethodName: "StartEvent",
-			Handler:    _EventService_StartEvent_Handler,
-		},
-		{
 			MethodName: "UpdateMatch",
 			Handler:    _EventService_UpdateMatch_Handler,
+		},
+		{
+			MethodName: "GetAllEvent",
+			Handler:    _EventService_GetAllEvent_Handler,
+		},
+		{
+			MethodName: "GetAllTour",
+			Handler:    _EventService_GetAllTour_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

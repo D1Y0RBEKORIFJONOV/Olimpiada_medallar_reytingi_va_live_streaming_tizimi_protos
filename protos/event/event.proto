@@ -84,12 +84,27 @@ message UpdateMatchReq {
   bool is_finished = 9;
 }
 
+message GetAllEventReq {
+  string id = 1;
+}
+
+message GetAllEventRes {
+  repeated Event events = 1;
+}
+message GetAllTourReq {
+  string  id = 1;
+}
+
+message GetAllTourRes {
+  repeated Tour tours = 1;
+}
+
 service EventService  {
   rpc CreateEvent(CreatEventReq) returns (EventStatus);
   rpc GetEvent(GetEventReq) returns (Event);
   rpc GetEventsTour(GetEventsTourReq) returns (Tour);
   rpc GetEventsToursMatch(GetEventsToursMatchReq) returns (Match);
-  rpc AddAthleteToEvent(AddAthleteToEventReq) returns (EventStatus);
-  rpc StartEvent(StartEventReq) returns (EventStatus);
   rpc UpdateMatch(UpdateMatchReq) returns (EventStatus);
+  rpc GetAllEvent(GetAllEventReq) returns (GetAllEventRes);
+  rpc GetAllTour(GetAllTourReq) returns (GetAllTourRes);
 }
